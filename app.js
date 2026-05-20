@@ -38,12 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="notif-time" data-created="${Date.now()}">الآن</div>
             </div>
             <div class="notif-check">
-                <svg viewBox="0 0 52 52" fill="none"
-                     stroke="white" stroke-width="6"
-                     stroke-linecap="round" stroke-linejoin="round"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <polyline points="8 28 22 42 46 12"/>
-                </svg>
+                <img src="images/checkmark.png" alt="✓" class="notif-check-img">
             </div>
         `;
 

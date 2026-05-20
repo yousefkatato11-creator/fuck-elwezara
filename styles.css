@@ -106,18 +106,23 @@ body {
 
 .notif-check {
     flex-shrink: 0;
-    /* Big standalone checkmark - no circle background */
-    width: 8.4vh;
-    height: 8.4vh;
+    width: 12.2vh;
+    height: 12.2vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.notif-check-img {
+    width: 12.2vh;   /* +50% bigger: 8.1 × 1.5 */
+    height: 12.2vh;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
 .notif-check svg {
-    width: 8.4vh;
-    height: 8.4vh;
-    stroke-width: 4px;
+    width: 6vh;
+    height: 6vh;
 }
 
 /* ── Side Tab ────────────────────────────────────────── */
@@ -258,7 +263,7 @@ body {
     position: absolute;
     bottom: 0; left: 0;
     width: 100vw;
-    height: 10vh;
+    height: 11.7vh;  /* +17% taller: 10 × 1.17 */
     background-color: #29AECE;
     display: flex;
     align-items: center;
