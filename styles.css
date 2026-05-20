@@ -106,16 +106,16 @@ body {
 
 .notif-check {
     flex-shrink: 0;
-    width: 12.2vh;
-    height: 12.2vh;
+    width: 7.8vh;  /* -20% smaller from 9.8 */
+    height: 7.8vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .notif-check-img {
-    width: 12.2vh;   /* +50% bigger: 8.1 × 1.5 */
-    height: 12.2vh;
+    width: 7.8vh;
+    height: 7.8vh;
     object-fit: contain;
     filter: brightness(0) invert(1);
 }

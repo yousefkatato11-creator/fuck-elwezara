@@ -4,11 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ── Login Button ── */
     const loginBtn = document.querySelector('.login-btn');
+    const loginInput = document.querySelector('.login-input');
+    
     loginBtn.addEventListener('click', () => {
         const orig = loginBtn.textContent;
         loginBtn.textContent = 'جاري التحميل...';
         loginBtn.disabled = true;
         loginBtn.style.opacity = '0.75';
+        
+        if (loginInput.value.trim() !== '') {
+            showNotification('تم تسليم هذا الامتحان من قبل !');
+        }
+
         setTimeout(() => {
             loginBtn.textContent = orig;
             loginBtn.disabled = false;
@@ -24,16 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
         showNotification();
     });
 
-    function showNotification() {
+    function showNotification(customBody) {
         const card = document.createElement('div');
         card.className = 'notif-card';
+
+        const bodyText = customBody || 'تم تسليم الاختبار بنجاح سيتم اصدار النتائج قريبا بعد الانتهاء من التصحيح.';
 
         // Calculate elapsed time text (will stay at "الآن" for 5s lifetime)
         card.innerHTML = `
             <div class="notif-text-area">
                 <div class="notif-title">تم بنجاح</div>
                 <div class="notif-body">
-                    تم تسليم الاختبار بنجاح سيتم اصدار النتائج قريبا بعد الانتهاء من التصحيح.
+                    ${bodyText}
                 </div>
                 <div class="notif-time" data-created="${Date.now()}">الآن</div>
             </div>
