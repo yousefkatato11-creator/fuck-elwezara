@@ -1,0 +1,297 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    user-select: none;
+    /* Wavy iridescent background matching the original tablet */
+    background-color: #d8e4ea;
+    background-image:
+        radial-gradient(ellipse 80% 50% at 20% 60%, rgba(160, 210, 225, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 75% 30%, rgba(210, 228, 240, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 60% at 50% 80%, rgba(185, 208, 220, 0.25) 0%, transparent 65%),
+        repeating-radial-gradient(
+            circle at 50% 45%,
+            transparent 0px,
+            transparent 32px,
+            rgba(180, 205, 218, 0.08) 33px,
+            rgba(180, 205, 218, 0.08) 34px
+        );
+}
+
+/* ── Notification Stack ─────────────────────────────── */
+#notification-stack {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    z-index: 9999;
+    /* Form is 42vh, +25% wider for a comfortable notification size */
+    width: calc(42vh * 1.25);
+    max-width: 65vw;
+    min-width: 340px;
+    pointer-events: none;
+}
+
+.notif-card {
+    background-color: #4BB543;
+    color: #fff;
+    border-radius: 6px;
+    /* 5% shorter padding = 13px instead of 14px */
+    padding: 13px 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse; /* Check on RIGHT in RTL */
+    justify-content: space-between;
+    gap: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.22);
+    direction: rtl;
+    border-bottom: 2px solid rgba(255,255,255,0.65);
+    animation: slideDown 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    pointer-events: auto;
+    overflow: hidden;
+}
+
+.notif-card.hiding {
+    animation: slideUp 0.32s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-110%); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-110%); }
+}
+
+.notif-text-area {
+    flex: 1;
+    text-align: right;
+}
+
+.notif-title {
+    font-size: 2.2vh;
+    font-weight: 800;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+}
+
+.notif-body {
+    font-size: 1.79vh;  /* 1.7 × 1.05 = +5% bigger */
+    font-weight: 400;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
+.notif-time {
+    font-size: 1.3vh;
+    opacity: 0.75;
+    margin-top: 6px;
+    font-weight: 400;
+}
+
+.notif-check {
+    flex-shrink: 0;
+    /* Big standalone checkmark - no circle background */
+    width: 8.4vh;
+    height: 8.4vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notif-check svg {
+    width: 8.4vh;
+    height: 8.4vh;
+    stroke-width: 4px;
+}
+
+/* ── Side Tab ────────────────────────────────────────── */
+.side-tab {
+    position: absolute;
+    right: 0;
+    top: 38%;
+    background-color: #2980BA;
+    color: white;
+    padding: 2.4vh 0.7vw;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    border-radius: 8px 0 0 8px;
+    font-size: 2vh;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    box-shadow: -3px 0 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+    z-index: 100;
+    transition: background-color 0.15s;
+}
+.side-tab:active { background-color: #1f6899; }
+
+/* ── Main Layout ─────────────────────────────────────── */
+.main-content {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── MOE Logo ────────────────────────────────────────── */
+.moe-logo-container {
+    margin-bottom: 3.2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* No background - let the transparent PNG blend naturally */
+}
+
+.moe-logo {
+    height: 31vh;
+    width: auto;
+    object-fit: contain;
+    clip-path: inset(2px 0 2px 0);
+}
+
+/* ── Login Form ──────────────────────────────────────── */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vh;
+    width: 42vh;
+}
+
+.login-input {
+    width: 100%;
+    height: 5.2vh;
+    padding: 0 16px;
+    font-size: 1.8vh;
+    color: #444;
+    text-align: right;
+    background-color: rgba(255,255,255,0.96);
+    border: 1px solid #c8d3d8;
+    /* Slightly rounded rectangle - matching image 2 */
+    border-radius: 5px;
+    outline: none;
+    font-family: 'Cairo', sans-serif;
+    letter-spacing: 0.3px;
+    /* Subtle bottom bump shadow */
+    box-shadow: 0 3px 0 rgba(155,180,195,0.4), 0 1px 3px rgba(0,0,0,0.05);
+    transition: box-shadow 0.18s, border-color 0.18s;
+}
+
+.login-input::placeholder {
+    color: #aaa;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.7vh;
+}
+
+.login-input:focus {
+    border-color: #5BBAD5;
+    background-color: #fff;
+    box-shadow: 0 3px 0 rgba(91,186,213,0.5), 0 0 0 2px rgba(91,186,213,0.15);
+}
+
+.login-btn {
+    width: 100%;
+    height: 6vh;
+    font-size: 2.4vh;
+    font-weight: 700;
+    color: #fff;
+    /* Diagonal stripe texture over green gradient - exactly like original */
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 0px,
+            rgba(0,0,0,0.0) 0px,
+            rgba(0,0,0,0.0) 0px
+        ),
+        linear-gradient(180deg, #62cc3c 0%, #4ab825 45%, #3da01e 100%);
+    border: none;
+    border-radius: 5px;  /* Slightly rounded rectangle matching image 2 */
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    box-shadow: 0 4px 0 rgba(40,130,15,0.45), 0 1px 3px rgba(0,0,0,0.1);
+    transition: opacity 0.15s;
+}
+
+.login-btn:active {
+    opacity: 0.88;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(40,130,15,0.45);
+}
+
+/* ── SwiftAssess Logo ─────────────────────────────────── */
+.sa-logo-container {
+    margin-top: 4.5vh;
+    display: flex;
+    justify-content: center;
+}
+
+.sa-logo-img {
+    height: 12vh;
+    width: auto;
+    object-fit: contain;
+    /* Removes the white square background by blending it with the page */
+    mix-blend-mode: multiply;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.footer {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100vw;
+    height: 10vh;
+    background-color: #29AECE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-text {
+    color: #fff;
+    font-size: 2.65vh;  /* 2.3 × 1.15 = +15% bigger */
+    font-weight: 400;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    /* Force LTR so Arabic+English mixed text displays in the correct order */
+    direction: ltr;
+    unicode-bidi: embed;
+    letter-spacing: 0.2px;
+}
+
+.footer-lang {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 10vw;
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 2.93vh;  /* 2.55 × 1.15 = +15% bigger */
+    font-weight: 400;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: rgba(0,0,0,0.08);
+    cursor: pointer;
+    border-left: 1px solid rgba(255,255,255,0.15);
+}
+
+.footer-lang:hover { background-color: rgba(0,0,0,0.13); }
